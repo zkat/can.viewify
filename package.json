@@ -1,0 +1,34 @@
+{
+  "name": "can.viewify",
+  "author": "Josh Marchán <sykopomp@sykosomatic.org>",
+  "version": "0.0.0",
+  "description": "Browserify transform that allows using require() on .mustache and .ejs files in CanJS applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sykopomp/can.viewify.git"
+  },
+  "keywords": [
+    "browserify-transform",
+    "canjs",
+    "browserify",
+    "mustache",
+    "handlebars",
+    "ejs"
+  ],
+  "licenses": [
+    {
+      "type": "CC0",
+      "url": "https://creativecommons.org/publicdomain/zero/1.0/"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/sykopomp/can.viewify/issues"
+  },
+  "dependencies": {
+    "through": "~2.3.4"
+  }
+}
