@@ -31,7 +31,8 @@
   },
   "dependencies": {
     "through": "~2.3.4",
-    "jsdom": "^0.10.2"
+    "jsdom": "^0.10.2",
+    "napa": "^0.4.0"
   },
   "napa": {
     "canjs": "bitovi/canjs.com#v2.0.5",
