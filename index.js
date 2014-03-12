@@ -1,40 +1,51 @@
 "use strict";
 
 var through = require("through"),
+    jsdom = require("jsdom"),
+    fs = require("fs"),
     path = require("path");
 
-function compile(engine, data) {
-  function view() {
-    var x = data;
-    if (!window.can || !window.can.view.engine) {
-      console.warn("can.viewify requires that can.view.engine be "+
-                   "previously loaded into the window. Sorry!");
-      return x;
-    } else {
-      return window.can.view.engine(x);
+function compile(opts, data, callback) {
+  jsdom.env({
+    html: "<h1>can.viewify</h1>",
+    src: [
+      fs.readFileSync(require.resolve("jquery/jquery.js")),
+      fs.readFileSync(require.resolve("canjs/can.jquery.js")),
+      fs.readFileSync(require.resolve("canjs/can.ejs.js"))
+    ],
+    done: function(err, win) {
+      if (err) {
+        callback(err);
+      } else {
+        var can = win.can;
+        for(var key in can.view.Scanner.tags) {
+          if (can.view.Scanner.tags.hasOwnProperty(key)) {
+            can.view.Scanner.tags[key] = Function.prototype;
+          }
+        }
+        var script = can.view.types["."+opts.ext].script(opts.filename, data);
+        callback(null, script);
+      }
     }
-  }
-  var compiled = "module.exports = (" + view.toString().replace(
-      /data/, JSON.stringify(data)).replace(/engine/g, engine) + ")();";
-  return compiled;
+  });
 }
 
-module.exports = function (file) {
+module.exports = function (file, opts) {
   var data = "",
       ext = path.extname(file).substr(1);
 
   function write (buf) { data += buf; }
-  function end (engine) {
-    return function() {
-      this.queue(compile(engine, data));
-      this.queue(null);
-    };
+  function end () {
+    var stream = this;
+    compile({ext: ext, filename: file}, data, function(err, script) {
+      stream.queue("module.exports = ("+script+");");
+      stream.queue(null);
+    });
   }
-
   switch (ext) {
   case "mustache":
   case "ejs":
-    return through(write, end(ext));
+    return through(write, end);
   default:
     return through();
   }
