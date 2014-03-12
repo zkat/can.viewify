@@ -32,13 +32,14 @@ function compile(opts, data, callback) {
 
 module.exports = function (file, opts) {
   var data = "",
-      ext = path.extname(file).substr(1);
+      ext = path.extname(file).substr(1),
+      filename = path.basename(file, "."+ext);
 
   function write (buf) { data += buf; }
   function end () {
     var stream = this;
-    compile({ext: ext, filename: file}, data, function(err, script) {
-      stream.queue("module.exports = ("+script+");");
+    compile({ext: ext, filename: filename}, data, function(err, script) {
+      stream.queue("module.exports=can.view.preload('"+filename+"',("+script+"));");
       stream.queue(null);
     });
   }
