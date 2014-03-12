@@ -5,6 +5,7 @@
   "description": "Browserify transform that allows using require() on .mustache and .ejs files in CanJS applications",
   "main": "index.js",
   "scripts": {
+    "install": "$(npm bin)/napa",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +30,14 @@
     "url": "https://github.com/sykopomp/can.viewify/issues"
   },
   "dependencies": {
-    "through": "~2.3.4"
+    "through": "~2.3.4",
+    "jsdom": "^0.10.2"
+  },
+  "napa": {
+    "canjs": "bitovi/canjs.com#v2.0.5",
+    "jquery": "jquery/jquery#1.9.1"
+  },
+  "devDependencies": {
+    "napa": "^0.4.0"
   }
 }
