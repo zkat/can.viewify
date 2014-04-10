@@ -39,7 +39,8 @@ module.exports = function (file, opts) {
   function end () {
     var stream = this;
     compile({ext: ext, filename: filename}, data, function(err, script) {
-      stream.queue("var can=require('can');"+
+      // TODO - this require('can') was not working on a project
+      stream.queue("/*var can=require('can');*/"+
                    (/ejs/i.test(ext) ? "require('can/view/ejs/ejs.js');" : "")+
                    "module.exports=can.view.preload('"+filename+"',("+script+"));");
       stream.queue(null);
