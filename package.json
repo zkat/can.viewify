@@ -1,7 +1,7 @@
 {
   "name": "can.viewify",
   "author": "Josh Marchán <sykopomp@sykosomatic.org>",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Browserify transform that allows using require() on .mustache and .ejs files in CanJS applications",
   "main": "index.js",
   "scripts": {
