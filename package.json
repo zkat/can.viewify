@@ -5,7 +5,7 @@
   "description": "Browserify transform that allows using require() on .mustache and .ejs files in CanJS applications",
   "main": "index.js",
   "scripts": {
-    "install": "$(npm bin)/napa",
+    "install" : "napa",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
